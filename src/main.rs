@@ -82,18 +82,16 @@ fn move_files(config: &Config) -> io::Result<()> {
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    let config = match parse_config(&args[1..]) {
-        Ok(config) => config,
+
+    match parse_config(&args[1..]) {
+        Ok(config) => {
+            move_files(&config).unwrap_or_else(|err| {
+                eprintln!("Error moving files: {err}.");
+            });
+        },
         Err(_) => {
             eprintln!("usage: mvd [-f fmt] directory");
             return;
-        }
-    };
-
-    match move_files(&config) {
-        Ok(_) => (),
-        Err(err) => {
-            eprintln!("Error moving files: {err}");
         }
     };
 }
