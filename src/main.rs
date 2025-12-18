@@ -88,7 +88,7 @@ fn main() {
             move_files(&config).unwrap_or_else(|err| {
                 eprintln!("Error moving files: {err}.");
             });
-        },
+        }
         Err(_) => {
             eprintln!("usage: mvd [-f fmt] directory");
             return;
